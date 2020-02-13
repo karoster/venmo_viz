@@ -1,0 +1,23 @@
+//example of what a query into the venmo transaction database returns, prior to being edited with 'update_query.json'
+{'_id': ObjectId('5bb7bd386e52181f090becfa'),
+'payment':
+    {'target':
+        {'user':
+            {'username': 'kimsionie',
+            'display_name': 'Sion Kim',
+            'first_name': 'Sion',
+            'last_name': 'Kim',
+            'profile_picture_url': 'https://venmopics.appspot.com/u/v5/s/19950034-c49a-4633-9686-4daf3a18b447',
+            'id': '2082497001160704615',
+            'date_joined': datetime.datetime(2016, 11, 13, 7, 9, 48)}},
+        'actor': {'username': 'Vitna-Kim',
+            'display_name': 'Vitna Kim',
+            'first_name': 'Vitna', 'last_name': 'Kim',
+            'profile_picture_url': 'https://s3.amazonaws.com/venmo/no-image.gif',
+            'id': '2482900494712832556',
+            'date_joined': datetime.datetime(2018, 5, 19, 18, 0, 4)},
+    'id': '2540405007077868184'}, 
+'note': 'fuk ya',
+'type': 'payment',
+'id': '2540405007614738995', //going to ignore this id
+'date_created': datetime.datetime(2018, 8, 7, 2, 11, 16)}
