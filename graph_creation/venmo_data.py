@@ -15,7 +15,7 @@ client = MongoClient()
 db = client.test
 venmo = db.venmo
 
-mongo_transactions = venmo.find({'payment.target.user.display_name':'Heather Hughes'})#.limit(1)#'actor':{'display_name': 'Jillian Boose'}
+mongo_transactions = venmo.find({})#.limit(1)#'actor':{'display_name': 'Jillian Boose'}
 print(mongo_transactions)
 for item in mongo_transactions:
 
@@ -182,7 +182,7 @@ def draw_graph(g, positions):
     plt.savefig('shapefile_graph.png')
 
 
-runSimulation(mongo_transactions, forceatlas_instance)
+# runSimulation(mongo_transactions, forceatlas_instance)
 
 #for convering geojson utf-8 invalid to geojson utf-8 valid
 #iconv -f UTF-8 -t UTF-8//IGNORE -o mod_1m.geojson 1m_edges.geojson...  
