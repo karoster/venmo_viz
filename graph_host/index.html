@@ -30,10 +30,30 @@
     <div id="myModal" class="modal">
 
         <div class="modal-content">
-          <span class="close">&times;</span>
-          <p>Some text in the Modal..</p>
+
+          <div class='modal-header'>
+            <span class="close">&times;</span>
+            <h1>VenmoViz</h1>
+          </div>
+
+          <div class='modal-body'>
+            <p>This is a visualization of ~1 million Venmo transactions from ~1.5 million unique users. Each edge represents a transaction, and each node represents a user.
+                I used a fraction of <a href="https://github.com/sa7mon/venmo-data">this</a> dataset to build the graph.
+            </p>
+            <p>Because of the large amount of data, certain features of the graph are only available at higher zoom levels:</p>
+            <ul id="modal-list">
+                <li>At a zoom larger than 5, you may see edges</li>
+                <li>At a zoom larger 6, you may see transaction details by hovering on an edge</li>
+                <li>At a zoom larger than 7, you may click on a node to get redirected to that Venmo user's recent transactions</li>
+                <li>At a zoom larger than 10, the names of the users become visible</li>
+            </ul>
+            <p>If you are interested in building your own large network graph, a detailed explanation on how this was made may be found <a href="">here.</a> </p>
+          </div>
+
+          <div class='modal-footer'>
+            <h4>Happy Exploring!</h4>
+          </div>
         </div>
-      
     </div>
 
     <script>
@@ -42,7 +62,7 @@
       container: 'map',
       style: 'mapbox://styles/karlo21/ck5d5g89s038j1io3ks740z7y', 
       center: [0, 0],
-      zoom: 3,
+      zoom: 3.01,
       maxZoom: 15,
       minZoom: 3
     });
@@ -112,10 +132,10 @@
     });
 
     let modal = document.getElementById("myModal");
-
     // Get the <span> element that closes the modal
     let closeSpan = document.querySelector(".close");
 
+    //install modal extension listeners
     closeSpan.onclick = function() {
         modal.style.display = "none";
     }
