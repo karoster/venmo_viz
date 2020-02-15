@@ -15,7 +15,7 @@ client = MongoClient()
 db = client.test
 venmo = db.venmo
 
-mongo_transactions = venmo.find({})#.limit(1)#'actor':{'display_name': 'Jillian Boose'}
+mongo_transactions = venmo.find({'payment.target.user.username':'Christian-Cosgrove-1'})#.limit(1)#'actor':{'display_name': 'Jillian Boose'}
 print(mongo_transactions)
 for item in mongo_transactions:
 

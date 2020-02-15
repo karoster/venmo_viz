@@ -9,14 +9,33 @@
     <link rel="stylesheet" href="map_styles.css">
   </head>
   <body>
+      <!-- Where the map is injected -->
     <div id='map'></div>
+
+    <!-- Where the transaction data is displayed on zoom >= 6 -->
     <div class='transactionInfo toggle-off'>
         <div>
             <span id="actor"></span> <strong id="action"></strong> <span id="target"></span>
         </div>
-        <div><span id="date"></span></div>
-        <div><span id="message"></span></div>
+        <div>Date: <span id="date"></span></div>
+        <div>Message: <span id="message"></span></div>
     </div>
+
+    <!-- Bottom Right Zoom level display -->
+    <div class="zoomInfo">
+        <div>Zoom: <strong id='zoom'>Loading...</strong></div>
+    </div>
+
+    <!-- Initial modal popup to explain website/zoom features -->
+    <div id="myModal" class="modal">
+
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Some text in the Modal..</p>
+        </div>
+      
+    </div>
+
     <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoia2FybG8yMSIsImEiOiJjazU2M292cHYwMzhmM210NTNwcjFraTg1In0.vVyJI1XcfhRToXiW_zpduQ'; 
     let map = new mapboxgl.Map({
@@ -36,19 +55,15 @@
     let dateField = document.getElementById('date');
     let messageField = document.getElementById('message');
     let transactionDiv = document.querySelector('.transactionInfo');
+    let zoomField = document.getElementById('zoom');
 
     map.on('load', () => {
 
-        // let mapSource = map.getSource('composite');
-        // let layer = map.getLayer('1m-nodes (1)');
-        // let style = map.getStyle();
-        // console.log(style)
-        // console.log(layer)  
-        // console.log(mapSource)
+        zoomField.textContent =  map.getZoom().toFixed(2);
 
         map.on('click', '1m-nodes (1)', function(e) {
             if(map.getZoom() >= 7){
-                let url = `https://venmo.com/${e.features[0].properties.username}`
+                let url = `https://venmo.com/${e.features[0].properties.username}`;
                 window.open(url, "_blank");
             }
         });
@@ -77,7 +92,6 @@
                 targetField.textContent = props.target_name;
                 dateField.textContent = props.date;
                 messageField.textContent = props.message;
-                // console.log(e.features[0].properties)
             }
         });
 
@@ -91,63 +105,26 @@
             dateField.textContent = '';
             messageField.textContent = '';
         });
+
+        map.on('zoomend', function(e){
+            zoomField.textContent = map.getZoom().toFixed(2);
+        });
     });
 
+    let modal = document.getElementById("myModal");
 
+    // Get the <span> element that closes the modal
+    let closeSpan = document.querySelector(".close");
 
-    // let actorDisplay = document.getElementById('actor');
-    // let actionDisplay = document.getElementById('action');
-    // let targetDisplay = document.getElementById('target');
-    // let dateDisplay = document.getElementById('date');
-    // let messageDisplay = document.getElementById('message');
+    closeSpan.onclick = function() {
+        modal.style.display = "none";
+    }
 
-    // map.on('load', ()=>{
-    //     let mapSource = map.getSource('composite');
-    //     let layer = map.getLayer('1m-nodes (1)')
-    //     console.log(layer)  
-    //     console.log(mapSource)
-    // })
-
-    // let nodeID = null;
-
-    // map.on('mousemove', '1m-nodes (1)', (e) => {
-
-    // // Set variables equal to the current feature's magnitude, location, and time
-    //     map.getCanvas.style().cursor = 'pointer';
-    //     let quakeMagnitude = e.features[0].properties.mag;
-    //     let quakeLocation = e.features[0].properties.place;
-    //     let quakeDate = new Date(e.features[0].properties.time);
-
-    //     // Check whether features exist
-    //     if (e.features.length > 0) {
-    //         // Display the magnitude, location, and time in the sidebar
-    //         magDisplay.textContent = quakeMagnitude;
-    //         locDisplay.textContent = quakeLocation;
-    //         dateDisplay.textContent = quakeDate;
-
-    //         // If quakeID for the hovered feature is not null,
-    //         // use removeFeatureState to reset to the default behavior
-    //         if (quakeID) {
-    //             map.removeFeatureState({
-    //                 source: "earthquakes",
-    //                 id: quakeID
-    //             });
-    //         }
-
-    //         quakeID = e.features[0].id;
-
-    //         // When the mouse moves over the earthquakes-viz layer, update the
-    //         // feature state for the feature under the mouse
-    //         map.setFeatureState({
-    //         source: 'earthquakes',
-    //         id: quakeID,
-    //         }, {
-    //         hover: true
-    //         });
-
-    //     }
-    // });
-    
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 
     </script>
     
