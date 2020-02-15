@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset='utf-8' />
-    <title>Points on a map</title>
+    <title>VenmoViz</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="map_styles.css">
+    <link rel="stylesheet" href="styles/map_styles.css">
   </head>
   <body>
       <!-- Where the map is injected -->
@@ -45,7 +45,7 @@
                 <li>At a zoom larger than 5, you may see edges</li>
                 <li>At a zoom larger 6, you may see transaction details by hovering on an edge</li>
                 <li>At a zoom larger than 7, you may click on a node to get redirected to that Venmo user's recent transactions</li>
-                <li>At a zoom larger than 10, the names of the users become visible</li>
+                <li>At a zoom larger than 10, usernames become visible</li>
             </ul>
             <p>If you are interested in building your own large network graph, a detailed explanation on how this was made may be found <a href="">here.</a> </p>
           </div>
@@ -56,6 +56,7 @@
         </div>
     </div>
 
+    <!-- inject map into DOM -->
     <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoia2FybG8yMSIsImEiOiJjazU2M292cHYwMzhmM210NTNwcjFraTg1In0.vVyJI1XcfhRToXiW_zpduQ'; 
     let map = new mapboxgl.Map({
@@ -66,87 +67,9 @@
       maxZoom: 15,
       minZoom: 3
     });
-    map.addControl(new mapboxgl.NavigationControl());
-
-    //fields that will get injected into/displayed on mouseover of transaction edges (when zoom >= 6)
-    let actorField = document.getElementById('actor');
-    let actionField = document.getElementById('action');
-    let targetField = document.getElementById('target');
-    let dateField = document.getElementById('date');
-    let messageField = document.getElementById('message');
-    let transactionDiv = document.querySelector('.transactionInfo');
-    let zoomField = document.getElementById('zoom');
-
-    map.on('load', () => {
-
-        zoomField.textContent =  map.getZoom().toFixed(2);
-
-        map.on('click', '1m-nodes (1)', function(e) {
-            if(map.getZoom() >= 7){
-                let url = `https://venmo.com/${e.features[0].properties.username}`;
-                window.open(url, "_blank");
-            }
-        });
-
-        map.on('mousemove', '1m-nodes (1)', function(e) {
-            if(map.getZoom() >= 7){
-                map.getCanvas().style.cursor = 'pointer';
-            }
-        });
-
-        map.on('mouseleave', '1m-nodes (1)', function(e){
-            if(map.getZoom() >= 7){
-                map.getCanvas().style.cursor = '';
-            }
-        });
-
-        map.on('mousemove', 'mod-1m', function(e) {
-
-            if(map.getZoom() >= 6){
-                let props = e.features[0].properties
-                transactionDiv.classList.remove('toggle-off');
-                transactionDiv.classList.add('toggle-on');
-                map.getCanvas().style.cursor = 'pointer';
-                actorField.textContent = props.actor_name;
-                actionField.textContent = props.action;
-                targetField.textContent = props.target_name;
-                dateField.textContent = props.date;
-                messageField.textContent = props.message;
-            }
-        });
-
-        map.on('mouseleave', 'mod-1m', function(){
-            transactionDiv.classList.remove('toggle-on');
-            transactionDiv.classList.add('toggle-off');
-            map.getCanvas().style.cursor = '';
-            actorField.textContent = '';
-            actionField.textContent = '';
-            targetField.textContent = '';
-            dateField.textContent = '';
-            messageField.textContent = '';
-        });
-
-        map.on('zoomend', function(e){
-            zoomField.textContent = map.getZoom().toFixed(2);
-        });
-    });
-
-    let modal = document.getElementById("myModal");
-    // Get the <span> element that closes the modal
-    let closeSpan = document.querySelector(".close");
-
-    //install modal extension listeners
-    closeSpan.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-
     </script>
-    
-  </body>
+    Load map event listeners
+    <script src='javascript/map_listeners.js'></script>
+    <script src='javascript/welcome_modal.js'></script>
+</body>
 </html>
