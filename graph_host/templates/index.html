@@ -6,7 +6,8 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="styles/map_styles.css">
+    <!-- <link rel="stylesheet" href="styles/map_styles.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/map_styles.css') }}"> 
   </head>
   <body>
       <!-- Where the map is injected -->
@@ -69,7 +70,9 @@
     });
     </script>
     Load map event listeners
-    <script src='javascript/map_listeners.js'></script>
-    <script src='javascript/welcome_modal.js'></script>
+    <!-- <script src='javascript/map_listeners.js'></script> -->
+    <script src="{{url_for('static', filename='javascript/map_listeners.js')}}"></script>
+    <!-- <script src='javascript/welcome_modal.js'></script> -->
+    <script src="{{url_for('static', filename='javascript/welcome_modal.js')}}"></script>
 </body>
 </html>
