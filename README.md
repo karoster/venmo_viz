@@ -54,7 +54,7 @@ So now what we are left with is two GeoJSON files. **In the next step you may ru
 I fixed that error with the following command:
 
 ```
-#iconv -f UTF-8 -t UTF-8//IGNORE -o output.geojson input.geojson  
+iconv -f UTF-8 -t UTF-8//IGNORE -o output.geojson input.geojson  
 
 ```
 
