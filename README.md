@@ -1,6 +1,6 @@
 # VenmoViz
-This README walks you through the process of creating your own large, navigateable social network graph.
-[The finished project](http://venmoviz.appspot.com/) consists of ~1.6 million nodes and ~1 million edges, using about one-eighth the total data set. The graph is navigateable as if it was Google Maps or Open Street Maps, and displays transaction and user data. 
+This README walks you through the process of creating your own large, navigable social network graph.
+[The finished project](http://venmoviz.appspot.com/) consists of ~1.6 million nodes and ~1 million edges, using about one-eighth the total data set. The graph is navigable as if it was Google Maps or Open Street Maps, and displays transaction and user data. 
 
 ## Necessary Tools
 - MongoDB (depending on data set)
